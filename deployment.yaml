@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-notificaciones
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fastapi-notificaciones
+  template:
+    metadata:
+      labels:
+        app: fastapi-notificaciones
+    spec:
+      containers:
+        - name: fastapi-notificaciones
+          image: fastapi-notificaciones:v1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-notificaciones-service
+spec:
+  selector:
+    app: fastapi-notificaciones
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: ClusterIP
