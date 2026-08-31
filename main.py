@@ -6,6 +6,8 @@ from pydantic import BaseModel
 
 DJANGO_API_URL = os.environ.get("DJANGO_API_URL", "http://127.0.0.1:8000/api")
 DJANGO_TOKEN_URL = f"{DJANGO_API_URL}/token/"
+DJANGO_USERNAME = os.environ.get("DJANGO_USERNAME", "riane")
+DJANGO_PASSWORD = os.environ.get("DJANGO_PASSWORD", "")
 
 app = FastAPI(title="Servicio de Notificaciones")
 
@@ -60,7 +62,7 @@ async def obtener_token_django() -> str:
     async with httpx.AsyncClient() as client:
         response = await client.post(
             DJANGO_TOKEN_URL,
-            json={"username": "riane", "password": "norim4614"},
+            json={"username": DJANGO_USERNAME, "password": DJANGO_PASSWORD},
         )
         response.raise_for_status()
         return str(response.json()["access"])
