@@ -18,6 +18,19 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 8000
+          env:
+            - name: DJANGO_API_URL
+              value: http://host.docker.internal:8000/api
+            - name: DJANGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: django-credentials
+                  key: username
+            - name: DJANGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: django-credentials
+                  key: password
 ---
 apiVersion: v1
 kind: Service
